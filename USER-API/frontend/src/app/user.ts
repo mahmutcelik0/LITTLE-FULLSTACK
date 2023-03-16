@@ -12,5 +12,5 @@ export class User
         this.email = "";
         this.experience = 0;
         this.domain = "";
- }
+    }
 } 

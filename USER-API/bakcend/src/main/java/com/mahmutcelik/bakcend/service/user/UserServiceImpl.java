@@ -1,10 +1,13 @@
 package com.mahmutcelik.bakcend.service.user;
 
+import com.mahmutcelik.bakcend.dto.UserDTO;
+import com.mahmutcelik.bakcend.dto.UserDTOMapper;
 import com.mahmutcelik.bakcend.exception.UserNotFoundException;
 import com.mahmutcelik.bakcend.model.User;
 import com.mahmutcelik.bakcend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,24 +29,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUsers() throws UserNotFoundException {
+    public List<UserDTO> getAllUsers(){
         List<User> temp = userRepository.findAll();
-        if(temp.isEmpty()) throw new UserNotFoundException();
-        return temp;
+        if(temp.isEmpty()) return new ArrayList<>();
+        return temp.stream().map(e ->new UserDTOMapper().apply(e)).toList();
     }
 
     @Override
-    public User getUserByEmail(String email) throws UserNotFoundException {
-        User temp = userRepository.findByEmail(email);
-        if(temp == null) throw new UserNotFoundException();
-        return temp;
+    public UserDTO getUserByEmail(String email) throws UserNotFoundException {
+        Optional<User> temp = userRepository.findByEmail(email);
+        return temp.map(user -> new UserDTOMapper().apply(user)).orElse(null);
     }
 
     @Override
-    public User deleteUserById(Long id) throws UserNotFoundException {
+    public void deleteUserById(Long id) throws UserNotFoundException {
         Optional<User> temp = userRepository.findById(id);
         if(temp.isEmpty()) throw new UserNotFoundException();
         userRepository.deleteById(id);
-        return temp.get();
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) throws UserNotFoundException {
+        Optional<User> temp = userRepository.findByEmail(email);
+        if(temp.isEmpty()) throw new UserNotFoundException();
+        userRepository.deleteByEmail(email);
     }
 }

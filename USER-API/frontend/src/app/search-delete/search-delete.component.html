@@ -1,1 +1,35 @@
-<p>search-delete works!</p>
+<div class="wrap">
+    <div class="search">
+       <input type="text" class="searchTerm" placeholder="Enter email to search." [(ngModel)] = "email">
+       <button type="submit" class="searchButton" (click) = "searchMethod()">
+         <i class="fa fa-search"></i>
+      </button>
+    </div>
+ </div>
+
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>E-MAIL</th>
+            <th>DOMAIN</th>
+            <th>EXPERIENCE</th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let user of users">
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.domain}}</td>
+            <td>{{user.experience}}</td>
+            <td>
+                <button (click) = "deleteSelected(user.email)">
+                    DELETE
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

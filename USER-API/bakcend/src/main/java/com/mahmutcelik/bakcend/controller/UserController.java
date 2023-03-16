@@ -1,10 +1,12 @@
 package com.mahmutcelik.bakcend.controller;
 
+import com.mahmutcelik.bakcend.dto.UserDTO;
 import com.mahmutcelik.bakcend.exception.UserNotFoundException;
 import com.mahmutcelik.bakcend.model.User;
 import com.mahmutcelik.bakcend.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,17 +25,28 @@ public class UserController {
     }
 
     @GetMapping
-    private List<User> getAllUsers() throws UserNotFoundException {
+    private List<UserDTO> getAllUsers() throws UserNotFoundException {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{email}")
-    private User getUserByEmail(@PathVariable String email) throws UserNotFoundException {
+    private UserDTO getUserByEmail(@PathVariable String email) throws UserNotFoundException {
         return userService.getUserByEmail(email);
     }
 
     @DeleteMapping("/{id}")
-    private User deleteUserById(@PathVariable Long id) throws UserNotFoundException {
-        return userService.deleteUserById(id);
+    private List<UserDTO> deleteUserById(@PathVariable Long id) throws UserNotFoundException {
+        userService.deleteUserById(id);
+        List<UserDTO> temp = userService.getAllUsers();
+        if(temp.isEmpty()) return null;
+        return temp;
+
+    }
+    @DeleteMapping("/email/{email}")
+    private List<UserDTO> deleteUserByEmail(@PathVariable String email) throws UserNotFoundException{
+        userService.deleteUserByEmail(email);
+        List<UserDTO> temp = userService.getAllUsers();
+        if(temp.isEmpty()) return new ArrayList<>();
+        return temp;
     }
 }

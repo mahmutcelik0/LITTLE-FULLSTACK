@@ -7,7 +7,6 @@ const routes: Routes = [
   {path:"",redirectTo:"register",pathMatch:"full"},
   {path:"register",component:RegistrationComponent},
   {path:"search",component:SearchDeleteComponent},
-  {path:"delete",component:SearchDeleteComponent}
 ];
 
 @NgModule({
