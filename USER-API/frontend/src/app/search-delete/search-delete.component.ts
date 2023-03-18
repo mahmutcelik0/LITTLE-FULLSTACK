@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserRegistrationService } from '../user-registration.service';
 
 @Component({
@@ -7,28 +8,29 @@ import { UserRegistrationService } from '../user-registration.service';
   styleUrls: ['./search-delete.component.css']
 })
 export class SearchDeleteComponent {
-  users:any;
+  users:Observable<any>;
   email:any;
 
   constructor(private service:UserRegistrationService){
-
+    this.users = new Observable
+    
   }
 
   ngOnInit(){
-    this.service.getUsers().subscribe(res=>this.users = res);
+    this.users = this.service.getUsers();
   }
 
   deleteSelected(email:string){
-    this.service.deleteUser(email).subscribe(res =>{
-      console.log(res);
-      this.users = res;
-    })
+    this.users = this.service.deleteUser(email);
   }
 
   searchMethod(){
     console.log(this.email)
-    if(this.email ===undefined || this.email === "" || this.email ===false) this.service.getUsers().subscribe(res=>this.users = res);
-    else this.service.getUserByEmail(this.email).subscribe(res => this.users =res);
+    if(this.email ===undefined || this.email === "" || this.email ===false) this.users = this.service.getUsers();
+    else {
+      console.log("entered")
+      this.users = this.service.getUserByEmail(this.email);
+    }
   }
 
 }

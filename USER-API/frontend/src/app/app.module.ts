@@ -7,12 +7,14 @@ import { RegistrationComponent } from './registration/registration.component';
 import { SearchDeleteComponent } from './search-delete/search-delete.component';
 import { UserRegistrationService } from './user-registration.service';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
-    SearchDeleteComponent
+    SearchDeleteComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

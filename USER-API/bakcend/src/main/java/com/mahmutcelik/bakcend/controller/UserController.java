@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    private UserDTO getUserByEmail(@PathVariable String email) throws UserNotFoundException {
+    private List<UserDTO> getUserByEmail(@PathVariable String email) throws UserNotFoundException {
         return userService.getUserByEmail(email);
     }
 

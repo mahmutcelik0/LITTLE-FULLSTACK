@@ -7,9 +7,7 @@ import com.mahmutcelik.bakcend.model.User;
 import com.mahmutcelik.bakcend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -36,9 +34,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO getUserByEmail(String email) throws UserNotFoundException {
+    public List<UserDTO> getUserByEmail(String email) throws UserNotFoundException {
         Optional<User> temp = userRepository.findByEmail(email);
-        return temp.map(user -> new UserDTOMapper().apply(user)).orElse(null);
+        return Collections.singletonList(new UserDTOMapper().apply(temp.get()));
     }
 
     @Override

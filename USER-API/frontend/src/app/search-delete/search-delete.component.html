@@ -18,7 +18,7 @@
             <th>ACTION</th>
         </tr>
     </thead>
-    <tbody *ngFor="let user of users">
+    <tbody *ngFor="let user of users | async">
         <tr>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>

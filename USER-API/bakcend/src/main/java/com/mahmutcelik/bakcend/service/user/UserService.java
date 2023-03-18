@@ -11,7 +11,7 @@ public interface UserService {
 
     List<UserDTO> getAllUsers() throws UserNotFoundException;
 
-    UserDTO getUserByEmail(String email) throws UserNotFoundException;
+    List<UserDTO> getUserByEmail(String email) throws UserNotFoundException;
 
     void deleteUserById(Long id) throws UserNotFoundException;
 
